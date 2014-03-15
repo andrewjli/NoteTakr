@@ -1,4 +1,7 @@
-/* GET users listing. */
-exports.list = function(req, res){
-  res.send('respond with a resource');
-};
+var db = require('../models')
+
+exports.create = function(req, res) {
+  db.User.create({ username: req.param('username') }).success(function() {
+    res.redirect('/')
+  })
+}
