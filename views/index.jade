@@ -2,8 +2,11 @@ extends layout
 
 block content
   h1= title
-  p This is Sequelize greeting you :)
 
+  p Welcome to #{title}
+  a(href='/auth/facebook') Sign in with Facebook
+
+  h1 Sample stuff (please ignore)
   h2 Creating a new user
   form(action="/users/create", method="post")
     input(type="text", name="username")

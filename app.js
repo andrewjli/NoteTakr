@@ -8,6 +8,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var db = require('./models')
 
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
+ 
+var FACEBOOK_APP_ID = '1471471923068168';
+var FACEBOOK_APP_SECRET = '2e3b7ed934f856c7cbd33d643d3d1e1c';
+
 var routes = require('./routes');
 var user = require('./routes/user');
 var task = require('./routes/task');
@@ -20,6 +26,8 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -48,6 +56,33 @@ if (app.get('env') === 'development') {
         });
     });
 }
+
+passport.use(new FacebookStrategy({
+  clientID: FACEBOOK_APP_ID,
+  clientSecret: FACEBOOK_APP_SECRET,
+  callbackURL: 'http://localhost:3000/auth/facebook/callback'
+}, function(accessToken, refreshToken, profile, done) {
+  process.nextTick(function() {
+    //Assuming user exists
+    done(null, profile);
+  });
+}));
+
+
+app.get('/auth/facebook', passport.authenticate('facebook'));
+ 
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/success',
+  failureRedirect: '/error'
+}));
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+ 
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
 
 // production error handler
 // no stacktraces leaked to user
