@@ -1,8 +1,7 @@
 'use strict';
 
-//specify the pdf file you want to load in here
-PDFJS.getDocument('examplePDF.pdf').then(function(pdf) {
-  pdf.getPage(1).then(function(page) {
+function renderPage(pdf, num) {
+  pdf.getPage(num).then(function(page) {
     var scale = 0.75;
     var viewport = page.getViewport(scale);
 
@@ -21,3 +20,5 @@ PDFJS.getDocument('examplePDF.pdf').then(function(pdf) {
   });
 });
 
+//specify the pdf file you want to load in here
+PDFJS.getDocument('examplePDF.pdf').then(renderPage(pdf, 5);
