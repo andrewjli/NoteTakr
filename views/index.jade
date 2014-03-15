@@ -9,3 +9,29 @@ block content
           | Welcome to NoteTakr! It's not quite working yet but we're working on it!
         p
           a(href='/auth/facebook').btn.btn-primary.btn-lg Sign in with Facebook »
+          
+  h1 Sample stuff (please ignore)
+  h2 Creating a new user
+  form(action="/users/create", method="post")
+    input(type="text", name="username")
+    input(type="submit")
+
+  h2 Users
+
+  ul
+  each user in users
+    li
+      = user.username
+      ul
+        li
+          | Creating a new task:
+          form(action="/users/" + user.id + "/tasks/create", method="post", style="display: inline")
+            input(type="text", name="title")
+            input(type="submit")
+        each task in user.tasks
+          li
+            = task.title
+            | &nbsp;
+            | (
+            a(href="/users/" + user.id + "/tasks/" + task.id + "/destroy") Destroy
+            | )
