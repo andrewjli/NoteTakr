@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
 var lodash = require('lodash');
-var sequelize = new Sequelize('sequelize_test', 'root', 'yourpasswordhere');
+var sequelize = new Sequelize('notetakr', 'notetakr', 'Abcd1234');
 var db = {};
 
 fs
